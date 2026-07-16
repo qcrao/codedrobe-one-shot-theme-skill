@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "replace-theme-id",
+  "displayName": "Replace Theme Name",
+  "version": "1.0.0",
+  "images": {
+    "hero": "assets/hero.png"
+  },
+  "copy": {
+    "tagline": "Replace with a short theme tagline",
+    "signature": "Replace Theme Name"
+  },
+  "targets": {
+    "codex": {
+      "css": "codex.css",
+      "options": {
+        "rendererProfile": "codex-theme-v1",
+        "baseTheme": {
+          "mode": "light",
+          "codeTheme": "codex",
+          "accent": "#A72E25",
+          "contrast": 82,
+          "ink": "#24211D",
+          "surface": "#F5EBD7",
+          "opaqueWindows": true,
+          "fonts": {
+            "windowsCode": "Cascadia Code",
+            "windowsUi": "Microsoft YaHei UI",
+            "macCode": "SF Mono",
+            "macUi": "PingFang SC"
+          },
+          "semanticColors": {
+            "diffAdded": "#DCE8D5",
+            "diffRemoved": "#F2D6D0",
+            "skill": "#A72E25"
+          }
+        }
+      },
+      "verification": {
+        "contexts": [
+          {
+            "name": "home",
+            "when": {
+              "any": ["[role='main']:has([data-testid='home-icon'])"]
+            },
+            "required": [
+              {
+                "name": "home-hero-shell",
+                "any": ["[role='main']:has([data-testid='home-icon']) > div:first-child > div:first-child > div:first-child"]
+              }
+            ],
+            "recommended": [
+              {
+                "name": "home-suggestions",
+                "any": [".group\\/home-suggestions"]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
