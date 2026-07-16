@@ -1,6 +1,6 @@
 ---
 name: codedrobe-one-shot-theme
-description: Create, package, install, watch, and verify a complete original CodeDrobe theme for the OpenAI Codex macOS desktop app from a single natural-language request. Use when a user asks for a Codex skin/theme, describes a visual concept such as “make me a kung-fu football theme,” wants an image-backed home and conversation design, or asks to create and directly install/apply a `.codedrobe-theme` without a multi-turn setup process.
+description: Create, package, install, watch, and verify a complete original CodeDrobe theme for the OpenAI Codex desktop app on macOS or Windows from a single natural-language request. Use when a user asks for a Codex skin/theme, describes a visual concept such as “make me a kung-fu football theme,” wants an image-backed home and conversation design, or asks to create and directly install/apply a `.codedrobe-theme` without a multi-turn setup process.
 ---
 
 # CodeDrobe One-Shot Theme
@@ -25,6 +25,8 @@ create/export only does not authorize restarting or applying.
 
 - Read [references/cli.md](references/cli.md) for runner selection.
 - Read [references/codex.md](references/codex.md) for host settings and restore.
+- On Windows, read [references/windows.md](references/windows.md) before detect,
+  restart, apply, or verification.
 - Read [references/one-shot-lessons.md](references/one-shot-lessons.md) before
   authoring or repairing a theme.
 - Read [references/theme-authoring.md](references/theme-authoring.md) when
@@ -57,9 +59,12 @@ create/export only does not authorize restarting or applying.
    nodes remain present and the selectors match the current Core profile.
 8. When CDP is already reachable, capture the active context with the
    privacy-safe Core snapshot, run `probe`, apply with one watcher, and verify.
-9. When applying from inside Codex on macOS, run
-   `scripts/macos_apply_theme.py --theme <absolute-package> --restart-existing`.
-   This submits one detached Core watcher so installation survives Codex
+9. When applying from inside Codex, select the platform helper:
+   - macOS: run `scripts/macos_apply_theme.py --theme <absolute-package>
+     --restart-existing`.
+   - Windows: run `node scripts/windows_apply_theme.mjs --theme
+     <absolute-package> --restart-existing`.
+   Both helpers start one detached Core watcher so installation survives Codex
    restarting. Do not start another watcher for the same theme.
 10. After Codex returns, read the helper log, run Core `verify` with an absolute
     screenshot path, and inspect the screenshot. Confirm theme id/version,
@@ -88,7 +93,8 @@ Stop or replace only the watcher owned by this workflow; never stack watchers.
 
 Computer Use cannot control Codex itself. Do not bypass that restriction. Use
 Core snapshots for the active route and the trusted renderer profile for route
-styling. State exactly which contexts were live-verified.
+styling. State exactly which contexts and platforms were live-verified. Treat
+Windows support as beta until the workflow has passed on Windows hardware.
 
 ## Repair loop
 

@@ -1,9 +1,10 @@
 # CodeDrobe One-Shot Theme Skill
 
-Create and install a complete original OpenAI Codex desktop theme from one
-sentence. The skill uses [`@codedrobe/core`](https://github.com/CodeDrobe/core)
-as its only theming runtime and adds a reliable authoring, restart, watcher, and
-visual-verification workflow.
+Create and install a complete original OpenAI Codex desktop theme on macOS or
+Windows from one sentence. The skill uses
+[`@codedrobe/core`](https://github.com/CodeDrobe/core) as its only theming
+runtime and adds a reliable authoring, restart, watcher, and visual-verification
+workflow.
 
 ## Install
 
@@ -25,6 +26,12 @@ The workflow generates original artwork when useful, creates a reversible
 `.codedrobe-theme`, applies it with one Core watcher, and verifies the active
 Codex renderer. Theme restore remains available through
 `codedrobe restore --app codex`.
+
+macOS installation uses a detached `launchctl` watcher. Windows installation
+uses a hidden detached PowerShell worker started by the bundled Node helper; it
+does not require administrator rights or a persistent execution-policy change.
+Windows support is currently beta because CodeDrobe Core's upstream Windows
+launcher is implemented but still awaiting published hardware verification.
 
 ## Source
 

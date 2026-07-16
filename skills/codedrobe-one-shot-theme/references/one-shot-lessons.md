@@ -6,13 +6,19 @@ theme build.
 ## Restart survival
 
 Running `codedrobe launch --restart-existing` directly from a Codex task can
-abort the task's own command when Codex exits. A plain `nohup` child may also be
-reaped with the app process group. On macOS, submit the apply-and-watch command
-through `launchctl` by using `scripts/macos_apply_theme.py`.
+abort the task's own command when Codex exits. A plain background child may also
+be reaped with the app process group.
 
-The helper owns a deterministic job label derived from the theme id. Reapplying
-the same theme replaces only that owned job. Never kill unrelated processes or
-watchers.
+- On macOS, submit the apply-and-watch command through `launchctl` by using
+  `scripts/macos_apply_theme.py`.
+- On Windows, create a hidden detached PowerShell worker by using
+  `node scripts/windows_apply_theme.mjs`. Node is already required by Core, so
+  the Windows helper does not add a Python dependency.
+
+The macOS helper owns a deterministic job label derived from the theme id. The
+Windows helper records its worker PID and verifies that the process command line
+contains its own worker script before replacing it. Reapplying the same theme
+replaces only that owned watcher. Never kill unrelated processes or watchers.
 
 ## Two renderer routes
 
