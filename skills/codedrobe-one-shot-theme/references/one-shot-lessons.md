@@ -43,7 +43,9 @@ fail.
 
 ## Separate home and conversation artwork
 
-Use a restrained, low-opacity conversation layer:
+Choose the conversation treatment from the design contract. For a requested
+full workspace background, cover the entire canvas under a readability wash so
+the source image has no visible edge:
 
 ```css
 html.codedrobe-host-codex main.main-surface::before {
@@ -52,10 +54,20 @@ html.codedrobe-host-codex main.main-surface::before {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: var(--codedrobe-image-hero) right bottom / auto 72% no-repeat;
-  opacity: .22;
+  background-image:
+    linear-gradient(rgba(250, 242, 225, .88), rgba(250, 242, 225, .70)),
+    var(--codedrobe-image-hero);
+  background-position: center, center;
+  background-size: 100% 100%, cover;
+  background-repeat: no-repeat;
+  opacity: .32;
 }
 ```
+
+If the design contract calls for only a small watermark, a bounded
+`right bottom / auto 72%` image is valid. Do not use that watermark geometry
+for a promised full background: its hard left/top bitmap edge becomes visible
+on tall task pages.
 
 Disable it on the home route so the hero is not duplicated:
 
@@ -71,6 +83,14 @@ home's first content region a fixed flex basis and the hero a 250-320px height.
 Hide the native home icon only after the hero layout is established. Preserve
 the project selector and composer instead of positioning them off-screen.
 
+Codex's home shell is often much wider than a generated 2:1 hero. `cover` can
+therefore enlarge the image until the focal subject, head, staff, clothing, or
+motion trails leave the frame. Generate the artwork with an 8-12% top/right
+safe area, then prefer `background-size: auto 100%` and
+`background-position: right center`. Let the CSS wash or surface color fill the
+quiet left side. Align the bitmap flush to `right`; a decorative pixel inset
+creates an obvious blank seam at the rounded edge.
+
 ## Screenshot symptoms
 
 - Colors changed but no image: base host settings loaded, but the active route
@@ -79,6 +99,13 @@ the project selector and composer instead of positioning them off-screen.
 - Image appears in conversation but home looks wrong: the conversation layer is
   leaking into home, the hero has no explicit height, or the title container is
   still centered by native flex rules.
+- Home subject is cut off: the very wide hero shell is using `cover` or an
+  oversized height percentage. Regenerate with a safe area and fit by height.
+- Home has a white strip on the right: remove the right-side background offset;
+  use `right center` and verify the rounded edge at desktop and narrow widths.
+- Task page shows a rectangular artwork edge: the theme promised a full
+  workspace background but used watermark sizing. Switch the artwork layer to
+  `cover` and put contrast in a separate full-size gradient wash.
 - Verify reports `noninteractive-chrome`: add the required profile rule.
 - Verify reports `installed: false` after navigation: replace one-time apply
   with one watcher; do not add a second watcher.
@@ -102,3 +129,8 @@ For each active context, require Core to report the expected theme id and
 version, `stylePresent: true`, `hero` in images, profile pass, no missing adapter
 requirements, and `horizontalOverflow: false`. Inspect the PNG as well; machine
 checks cannot detect awkward composition or overlapping text.
+
+Run the detached apply helper as its own action after packing. A chained shell
+can be interrupted when Codex replaces a renderer, so always confirm the live
+version reported by `verify` matches the just-packed manifest before claiming
+the repair is installed.

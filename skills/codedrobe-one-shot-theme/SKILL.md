@@ -65,7 +65,9 @@ pastel, or productivity-oriented.
 3. Copy `assets/one-shot-starter/` into that source directory.
 4. If the concept benefits from artwork, invoke the available image-generation
    skill/tool. Generate an original wide hero with the subject on the right and
-   quiet UI space on the left. Copy the final image to `assets/hero.png` inside
+   quiet UI space on the left. Keep the complete focal subject, limbs, clothing,
+   props, and motion trails inside an 8-12% top/right safe area so a wide Codex
+   hero does not cut them off. Copy the final image to `assets/hero.png` inside
    the theme source. Do not leave a project asset only in a generated-images
    cache.
 5. Replace every placeholder in `theme.json` and customize the top-level CSS
@@ -73,7 +75,11 @@ pastel, or productivity-oriented.
    Keep `rendererProfile: codex-theme-v1`.
 6. Keep shared shell styling route-neutral. Keep the conversation artwork in
    `main.main-surface::before`, then disable it on home. Keep the large home
-   artwork inside `.dream-home`; never show both layers at once.
+   artwork inside `.dream-home`; never show both layers at once. Treat the two
+   crops independently: fit the home hero by height and align it flush to the
+   right edge, while a requested workspace background should cover the whole
+   conversation canvas beneath a readability wash. Do not leave a visible
+   bitmap edge, blank seam, or arbitrary inset at the right side.
 7. Pack and inspect the `.codedrobe-theme`. Positional warnings for the guarded
    `.dream-home` structure are acceptable only when the named home verification
    nodes remain present and the selectors match the current Core profile.
@@ -91,6 +97,9 @@ pastel, or productivity-oriented.
 10. After Codex returns, read the helper log, run Core `verify` with an absolute
     screenshot path, and inspect the screenshot. Confirm theme id/version,
     `hero`, profile, required landmarks, no overflow, and readable content.
+    Inspect both home and a normal task at desktop width: the home focal subject
+    must be fully framed with no right-edge gap, and a workspace background must
+    fill the conversation surface without exposing the source image boundary.
 
 Keep completion levels separate: designed, statically inspected, applied,
 live-verified, and exported. Never promote a preview or successful package
@@ -103,8 +112,15 @@ inspection into a claim that the real app was verified.
 - Include `#codedrobe-codex-skin-chrome { pointer-events: none !important; }`.
 - Include one and only one conversation artwork layer with
   `pointer-events: none`.
+- When `backgroundScope` includes the workspace, make that layer cover the full
+  conversation surface and use a separate translucent wash for contrast. A
+  bounded `auto <percent>` bitmap is a watermark, not a full background, and
+  must not expose a hard image edge.
 - Disable that layer on `.dream-home`; use a dedicated home hero at least
   `250px` tall instead of a narrow image strip.
+- For a 2:1 source inside Codex's much wider home banner, prefer height-fit
+  sizing such as `auto 100%` and `right center`. Do not use `cover` when it cuts
+  the focal subject, and do not add a right offset that creates a blank seam.
 - Keep native navigation, project selection, composer, scrolling, focus rings,
   menus, and reduced-motion behavior functional.
 - Never use external `@import`, remote CSS URLs, scripts, localized-copy
