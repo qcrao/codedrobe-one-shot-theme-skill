@@ -112,6 +112,62 @@ html.codedrobe-host-codex aside.app-shell-left-panel :is([aria-current="page"], 
   box-shadow: inset 3px 0 #d3a359, 0 6px 18px rgba(0, 0, 0, .14) !important;
 }
 
+/* Tailwind's !text/!opacity utilities are layered, so this repair must also live in a layer. */
+@layer base {
+  html.codedrobe-host-codex aside.app-shell-left-panel button[class*="!text-token-input-placeholder-foreground"] {
+    --color-token-input-placeholder-foreground: #f7ecd8;
+    --color-token-foreground: #fff8e9;
+    color: rgba(247, 236, 216, .78) !important;
+    opacity: 1 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  html.codedrobe-host-codex aside.app-shell-left-panel button[class*="!text-token-input-placeholder-foreground"]:is(:hover, :focus-visible) {
+    color: #fff8e9 !important;
+    background: rgba(184, 135, 61, .16) !important;
+    box-shadow: inset 2px 0 var(--theme-highlight) !important;
+    transform: none !important;
+  }
+}
+
+/* Usage cards live inside the dark sidebar but use a light surface. Keep their own contrast system. */
+html.codedrobe-host-codex aside.app-shell-left-panel [role="status"].bg-token-main-surface-primary {
+  color: var(--theme-ink) !important;
+  background: rgba(255, 248, 232, .98) !important;
+  border-color: rgba(99, 69, 44, .28) !important;
+}
+
+html.codedrobe-host-codex aside.app-shell-left-panel [role="status"].bg-token-main-surface-primary :is(div, p, span, svg) {
+  color: var(--theme-ink) !important;
+}
+
+html.codedrobe-host-codex aside.app-shell-left-panel [role="status"].bg-token-main-surface-primary button {
+  color: var(--theme-ink) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+html.codedrobe-host-codex aside.app-shell-left-panel [role="status"].bg-token-main-surface-primary button.bg-token-bg-fog {
+  background: rgba(255, 252, 245, .92) !important;
+  border-color: rgba(99, 69, 44, .30) !important;
+}
+
+html.codedrobe-host-codex aside.app-shell-left-panel [role="status"].bg-token-main-surface-primary button.bg-token-bg-fog:hover {
+  background: rgba(224, 204, 166, .46) !important;
+}
+
+html.codedrobe-host-codex aside.app-shell-left-panel [role="status"].bg-token-main-surface-primary button.bg-token-foreground {
+  color: #fff8e9 !important;
+  background: var(--theme-ink) !important;
+  border-color: var(--theme-ink) !important;
+}
+
+html.codedrobe-host-codex aside.app-shell-left-panel [role="status"].bg-token-main-surface-primary button.bg-token-foreground:hover {
+  background: #37404a !important;
+}
+
 html.codedrobe-host-codex main.main-surface {
   position: relative;
   background:

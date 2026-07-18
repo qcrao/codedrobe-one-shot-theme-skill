@@ -162,6 +162,35 @@ gradient: the composer also owns a small internal scroll fade that should stay.
 Keep the composer surface, its normal shadow, and its `:focus-within` ring
 unchanged.
 
+## Treat light cards inside a dark sidebar as separate contrast systems
+
+A dark-sidebar theme often starts with a broad descendant rule so navigation,
+projects, and chats inherit a light foreground. Codex also mounts temporary
+light surfaces inside that same sidebar, including the usage-limit status card.
+The broad rule can therefore produce light text, a light close icon, or an
+invisible secondary button on a light card.
+
+Do not weaken the entire sidebar rule to repair one transient surface. Anchor a
+local contrast reset to the card's semantic structure, such as
+`[role="status"].bg-token-main-surface-primary`, then restore its title,
+description, close control, secondary button, and primary action independently.
+Verify the card while it is actually open; a closed-state DOM snapshot cannot
+prove its text and actions are readable.
+
+## Important Tailwind utilities need token-aware repairs
+
+Sidebar disclosure controls such as `Show more` and `Show less` can carry
+Tailwind classes whose literal names begin with `!`, including important text
+and opacity utilities. An unlayered theme declaration with `!important` may
+still lose because important declarations reverse cascade-layer priority.
+
+Use the semantic class signature only for the affected disclosure controls,
+place the repair in an appropriate cascade layer, and locally set the color
+tokens consumed by the important utilities. Preserve a visible idle state and
+test `:hover`/`:focus-visible` separately. Sidebar-wide button hover effects
+must not make these small disclosure controls translate, acquire a heavy pill,
+or switch back to a dark foreground.
+
 ## Restore needs a fresh process when base colors changed
 
 Core restore removes renderer CSS immediately and restores the transactional
@@ -195,3 +224,8 @@ example, removing every descendant `bg-gradient-to-t` fixes the outer composer
 tray but also erases the native internal scroll fade. Prefer direct-child and
 state-aware selectors, then compare computed styles for both layers after the
 new package is live.
+
+Computed color evidence matters when a class contains `!text-*` or
+`!opacity-*`. Confirm the live element's resolved color, opacity, background,
+box shadow, and transform in both idle and hover states; source-order inspection
+alone is insufficient when cascade layers are involved.

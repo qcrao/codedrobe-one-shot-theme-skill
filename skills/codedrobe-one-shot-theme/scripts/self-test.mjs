@@ -42,5 +42,17 @@ requireMatch(
   /\.composer-surface-chrome:focus-within\s*\{[^}]*0\s+0\s+0\s+3px/s,
   "the native-readable composer focus halo must remain",
 );
+requireMatch(
+  /@layer\s+base\s*\{[\s\S]*button\[class\*="!text-token-input-placeholder-foreground"\][\s\S]*--color-token-input-placeholder-foreground\s*:/,
+  "layered important disclosure controls need a local readable token",
+);
+requireMatch(
+  /\[role="status"\]\.bg-token-main-surface-primary\s*\{[^}]*color\s*:\s*var\(--theme-ink\)\s*!important;[^}]*background\s*:/s,
+  "light usage cards inside the sidebar need their own contrast system",
+);
+requireMatch(
+  /\[role="status"\]\.bg-token-main-surface-primary button\.bg-token-foreground\s*\{[^}]*color\s*:\s*#fff8e9\s*!important;[^}]*background\s*:\s*var\(--theme-ink\)\s*!important;/s,
+  "usage card primary actions need inverse contrast",
+);
 
 console.log("codedrobe-one-shot-theme visual invariants passed");

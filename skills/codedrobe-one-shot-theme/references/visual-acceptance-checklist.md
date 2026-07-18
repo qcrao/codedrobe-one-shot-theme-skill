@@ -37,6 +37,17 @@ and Codex build.
   stays an outline instead of a doubled or solid blob.
 - Opening and closing the project menu does not shift the dock or composer.
 
+## Sidebar transient states
+
+- Project and chat `Show more` / `Show less` controls are readable at rest.
+- Their hover and keyboard-focus states retain a light foreground, avoid
+  horizontal movement, and do not inherit an oversized navigation-item pill.
+- Open the usage-limit status card. Its title, reset description, close icon,
+  progress indicator, secondary action, and primary action all meet readable
+  light-surface contrast inside the dark sidebar.
+- Closing the usage card restores the native sidebar layout without leaving a
+  stale background, border, or spacer.
+
 ## Conversation surface
 
 - Full-background artwork covers the complete workspace with no hard bitmap
@@ -48,6 +59,8 @@ and Codex build.
   scroll fade remains intact.
 - Composer idle, typing, expanded, and `:focus-within` states preserve native
   controls, caret, microphone, send button, focus ring, and keyboard behavior.
+- Queue at least one follow-up while a response is running. The queued-message
+  row remains readable and does not reintroduce the outer footer tray.
 
 ## Recovery
 
@@ -64,5 +77,8 @@ and Codex build.
 - Change one visual cause per version bump.
 - After apply, compare the target plus adjacent native layers/states so a broad
   selector cannot silently remove hidden controls or nested fades.
+- For controls carrying `!text-*` or `!opacity-*`, record computed idle and
+  hover color, opacity, background, box shadow, and transform from the live
+  renderer rather than assuming a later `!important` rule won.
 - Empty helper output is not success; the live installed version must match the
   package before reporting completion.
