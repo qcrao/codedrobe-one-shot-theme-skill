@@ -224,6 +224,7 @@ function main() {
   });
   const activeFile = path.join(base, 'state', 'active.json');
   fs.rmSync(activeFile, { force: true });
+  fs.rmSync(path.join(base, 'state', 'active-watch.restarted'), { force: true });
 
   if (restored.status !== 0) {
     console.log(JSON.stringify({

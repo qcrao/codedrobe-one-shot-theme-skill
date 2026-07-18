@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { parseThemeId, validatePackageBytes } from './theme_library.mjs';
 import { classifyRestore, macRestartShellCommand } from './restore_theme.mjs';
+import { macWatcherShellCommand } from './apply_theme.mjs';
 
 const bytes = Buffer.from('data-only-theme');
 const entry = {
@@ -40,5 +41,21 @@ assert.ok(
   'macOS restart job must remove its own launchd label so launchd cannot re-run it in a loop',
 );
 assert.ok(!restartCommand.includes('exec '), 'restart command must not exec away the self-cleanup step');
+
+const watcherCommand = macWatcherShellCommand({
+  watchCommand: "'codedrobe' 'apply' '--watch' '--no-launch'",
+  restartCommand: "'codedrobe' 'apply' '--watch' '--restart-existing'",
+  markerFile: '/tmp/active-watch.restarted',
+});
+assert.equal(
+  watcherCommand,
+  "if [ -e '/tmp/active-watch.restarted' ]; then 'codedrobe' 'apply' '--watch' '--no-launch'; "
+    + "else /usr/bin/touch '/tmp/active-watch.restarted'; 'codedrobe' 'apply' '--watch' '--restart-existing'; fi",
+  'launchd re-runs of a crashed watcher must re-attach instead of restarting Codex again',
+);
+assert.equal(
+  macWatcherShellCommand({ watchCommand: "'codedrobe' 'apply' '--watch' '--no-launch'", restartCommand: null, markerFile: '/tmp/m' }),
+  "'codedrobe' 'apply' '--watch' '--no-launch'",
+);
 
 console.log('codedrobe-theme-manager package tests passed');

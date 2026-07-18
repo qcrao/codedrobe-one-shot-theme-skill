@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
 
 const macLabel = 'org.codexskins.codedrobe.active';
 
@@ -115,6 +116,17 @@ function shellQuote(value) {
   return `'${String(value).replaceAll("'", "'\\''")}'`;
 }
 
+// launchd re-runs submitted jobs whenever their process exits. The watcher is
+// meant to stay alive, but if it crashes after being submitted with
+// --restart-existing, every re-run would kill and relaunch Codex again. A
+// marker file gates the restart to the first run only; re-runs re-attach with
+// --no-launch.
+export function macWatcherShellCommand({ watchCommand, restartCommand, markerFile }) {
+  if (!restartCommand) return watchCommand;
+  const marker = shellQuote(markerFile);
+  return `if [ -e ${marker} ]; then ${watchCommand}; else /usr/bin/touch ${marker}; ${restartCommand}; fi`;
+}
+
 function powershellQuote(value) {
   return `'${String(value).replaceAll("'", "''")}'`;
 }
@@ -208,19 +220,28 @@ async function main() {
   }
 
   const themeId = String(inspection.theme?.id || pathApi.basename(theme, '.codedrobe-theme'));
+  const launchFlag = options.restartExisting ? '--restart-existing' : '--no-launch';
   const applyArgs = ['apply', '--app', options.app, '--port', String(options.port), '--theme', theme, '--watch'];
   if (options.appPath) applyArgs.push('--app-path', options.appPath);
-  applyArgs.push(options.restartExisting ? '--restart-existing' : '--no-launch');
   const root = managedRoot(options.platform);
 
   if (options.platform === 'darwin') {
     const logDir = path.join(os.homedir(), 'Library', 'Logs', 'CodexSkins');
     const stdoutLog = path.join(logDir, 'active-watch.log');
     const stderrLog = path.join(logDir, 'active-watch.err.log');
-    const command = [runner.executable, ...runner.prefix, ...applyArgs].map(shellQuote).join(' ');
+    const stateDir = path.join(root, 'state');
+    const restartMarker = path.join(stateDir, 'active-watch.restarted');
+    const quoteCommand = (args) => [runner.executable, ...runner.prefix, ...args].map(shellQuote).join(' ');
+    const command = macWatcherShellCommand({
+      watchCommand: quoteCommand([...applyArgs, '--no-launch']),
+      restartCommand: options.restartExisting ? quoteCommand([...applyArgs, '--restart-existing']) : null,
+      markerFile: restartMarker,
+    });
     const plan = { platform: 'macos', theme, themeId, watcher: macLabel, stdoutLog, stderrLog, command, restartExisting: options.restartExisting };
     if (options.dryRun) return console.log(JSON.stringify({ action: 'dry-run', ...plan }, null, 2));
     fs.mkdirSync(logDir, { recursive: true });
+    fs.mkdirSync(stateDir, { recursive: true });
+    fs.rmSync(restartMarker, { force: true });
     spawnSync('launchctl', ['remove', macLabel], { encoding: 'utf8' });
     const legacyWatchersStopped = stopLegacyMacWatchers();
     run({ executable: 'launchctl', prefix: [] }, ['submit', '-l', macLabel, '-o', stdoutLog, '-e', stderrLog, '--', '/bin/zsh', '-lc', command]);
@@ -241,7 +262,7 @@ async function main() {
   const pidFile = path.win32.join(stateDir, 'active-watch.json');
   const stdoutLog = path.win32.join(stateDir, 'active-watch.log');
   const stderrLog = path.win32.join(stateDir, 'active-watch.err.log');
-  const allArgs = [...runner.prefix, ...applyArgs];
+  const allArgs = [...runner.prefix, ...applyArgs, launchFlag];
   const worker = `$ErrorActionPreference = 'Stop'\r\n& ${powershellQuote(runner.executable)} @(${allArgs.map(powershellQuote).join(',')})\r\nexit $LASTEXITCODE\r\n`;
   const plan = { platform: 'windows', theme, themeId, workerFile, pidFile, stdoutLog, stderrLog, restartExisting: options.restartExisting, worker };
   if (options.dryRun) return console.log(JSON.stringify({ action: 'dry-run', ...plan }, null, 2));
@@ -271,7 +292,10 @@ async function main() {
   }, null, 2));
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : String(error));
-  process.exitCode = 1;
-});
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href;
+if (isMain) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exitCode = 1;
+  });
+}
