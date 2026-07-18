@@ -1,4 +1,4 @@
 interface:
   display_name: "CodeDrobe One-Shot Theme"
-  short_description: "Create and install a complete Codex theme from one sentence"
-  default_prompt: "Use $codedrobe-one-shot-theme to create and install a polished Codex theme from my description."
+  short_description: "Create, apply, and verify a Codex theme from one sentence"
+  default_prompt: "Use $codedrobe-one-shot-theme to create, apply, and verify a polished Codex theme from my description."

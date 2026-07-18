@@ -1,10 +1,15 @@
-# CodeDrobe One-Shot Theme Skill
+# CodexSkins CodeDrobe Skills
 
-Create and install a complete original OpenAI Codex desktop theme on macOS or
-Windows from one sentence. The skill uses
-[`@codedrobe/core`](https://github.com/CodeDrobe/core) as its only theming
-runtime and adds a reliable authoring, restart, watcher, and visual-verification
+Create, discover, install, switch, and verify OpenAI Codex desktop themes on
+macOS or Windows. The skills use
+[`@codedrobe/core`](https://github.com/CodeDrobe/core) as their only theming
+runtime and add a reliable authoring, restart, watcher, and visual-verification
 workflow.
+
+The public entrypoint and catalog live at:
+
+- <https://www.codexskins.org/SKILL.md>
+- <https://www.codexskins.org/api/themes.json>
 
 ## Install
 
@@ -16,6 +21,17 @@ npx skills add qcrao/codedrobe-one-shot-theme-skill \
   --yes
 ```
 
+Replace the skill name with `codedrobe-theme-finder` or
+`codedrobe-theme-manager` when that is the capability needed. Install only one
+for the current request.
+
+## Skills
+
+- `codedrobe-one-shot-theme`: create, package, apply, and verify a new theme.
+- `codedrobe-theme-finder`: search the machine-readable CodexSkins catalog.
+- `codedrobe-theme-manager`: download with SHA-256 verification, apply or
+  switch through one owned watcher, verify, and restore.
+
 ## Use
 
 ```text
@@ -25,7 +41,10 @@ npx skills add qcrao/codedrobe-one-shot-theme-skill \
 The workflow generates original artwork when useful, creates a reversible
 `.codedrobe-theme`, applies it with one Core watcher, and verifies the active
 Codex renderer. Theme restore remains available through
-`codedrobe restore --app codex`.
+`codedrobe restore --app codex` or the manager's `restore_theme.mjs` helper.
+When a theme changed Codex host appearance settings, complete restoration also
+requires a full Codex restart; the manager reports `restart-required` and can
+submit the restart with `restore_theme.mjs --restart-existing` after approval.
 
 macOS installation uses a detached `launchctl` watcher. Windows installation
 uses a hidden detached PowerShell worker started by the bundled Node helper; it

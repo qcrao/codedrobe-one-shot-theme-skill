@@ -1,0 +1,4 @@
+interface:
+  display_name: "CodeDrobe Theme Finder"
+  short_description: "Find verified Codex themes from CodexSkins"
+  default_prompt: "Use $codedrobe-theme-finder to find the closest verified Codex theme for my preferred style."

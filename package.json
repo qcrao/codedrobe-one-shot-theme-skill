@@ -1,12 +1,13 @@
 {
   "name": "codedrobe-one-shot-theme-skill",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "One-sentence CodeDrobe theme creation and installation skill for Codex on macOS and Windows.",
+  "description": "Composable CodeDrobe skills for creating, finding, installing, switching, and verifying Codex themes.",
   "license": "Apache-2.0",
   "scripts": {
-    "test": "npm run test:skill && npm run test:windows-helper",
+    "test": "npm run test:skill && npm run test:catalog-skills && npm run test:windows-helper",
     "test:skill": "npx --yes skills add . --list",
+    "test:catalog-skills": "node skills/codedrobe-theme-finder/scripts/self-test.mjs && node skills/codedrobe-theme-manager/scripts/self-test.mjs && node skills/codedrobe-theme-manager/scripts/apply_theme.mjs --theme /tmp/sample.codedrobe-theme --dry-run --platform darwin && node skills/codedrobe-theme-manager/scripts/apply_theme.mjs --theme 'C:\\Themes\\sample.codedrobe-theme' --dry-run --platform win32 && node skills/codedrobe-theme-manager/scripts/restore_theme.mjs --restart-existing --dry-run --platform darwin && node skills/codedrobe-theme-manager/scripts/restore_theme.mjs --restart-existing --dry-run --platform win32",
     "test:windows-helper": "node --check skills/codedrobe-one-shot-theme/scripts/windows_apply_theme.mjs && node skills/codedrobe-one-shot-theme/scripts/windows_apply_theme.mjs --theme \"C:\\Themes\\sample.codedrobe-theme\" --restart-existing --dry-run --platform win32"
   },
   "engines": {

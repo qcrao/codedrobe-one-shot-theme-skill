@@ -9,7 +9,11 @@ Codex themes may declare a `baseTheme`. Core updates only its managed `[desktop]
 - If Codex is already running and those host settings change, Core requires `--restart-existing` for a complete result.
 - Do not add that flag or close Codex until the user authorizes the restart.
 - Do not edit `config.toml` manually to work around the guard.
-- Repeated applies replace renderer CSS, copy, profile state, and image URLs. Restore returns host settings to the saved pre-CodeDrobe state.
+- Repeated applies replace renderer CSS, copy, profile state, and image URLs.
+- Restore returns host settings to the saved pre-CodeDrobe state on disk. When
+  Core reports `host.changed: true`, the running Codex process can retain the
+  old base palette until a complete quit/reopen. Treat that restart as part of
+  restore, request permission before closing Codex, and verify after it returns.
 
 ## Verification surface
 

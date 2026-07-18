@@ -74,5 +74,9 @@ Restore through Core:
 codedrobe restore --app codex --port 9335
 ```
 
-Do not manually edit the Codex config or delete application data as a restore
+If Core reports that host appearance settings changed, fully close and reopen
+Codex before claiming the stock colors are restored. Prefer the manager helper
+with `--restart-existing` after the user authorizes restart; it uses a detached
+PowerShell process so the restart survives the current Codex task closing. Do
+not manually edit the Codex config or delete application data as a restore
 mechanism.

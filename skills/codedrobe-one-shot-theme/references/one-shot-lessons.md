@@ -86,6 +86,16 @@ the project selector and composer instead of positioning them off-screen.
   `.horizontal-scroll-fade-mask .group\/project-selector` with readable surface
   and foreground tokens.
 
+## Restore needs a fresh process when base colors changed
+
+Core restore removes renderer CSS immediately and restores the transactional
+Codex appearance backup on disk. Codex does not always reload those host colors
+inside the already-running Electron process. When restore reports
+`host.changed: true`, return `restart-required`, obtain permission, and restart
+Codex through the detached manager helper. A renderer with no theme classes can
+still be visually stale before that restart, so verify computed colors only on
+the fresh process.
+
 ## Evidence standard
 
 For each active context, require Core to report the expected theme id and

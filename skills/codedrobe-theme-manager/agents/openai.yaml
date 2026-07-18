@@ -1,0 +1,4 @@
+interface:
+  display_name: "CodeDrobe Theme Manager"
+  short_description: "Install, apply, switch, verify, and restore themes"
+  default_prompt: "Use $codedrobe-theme-manager to install and apply a CodexSkins theme, verify it, and keep a safe restore path."

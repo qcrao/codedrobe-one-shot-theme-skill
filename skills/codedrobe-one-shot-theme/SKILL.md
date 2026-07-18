@@ -21,6 +21,24 @@ Treat `install`, `apply`, `直接安装`, `直接装上`, or equivalent wording 
 authorization to close and restart Codex if Core requires it. A request to
 create/export only does not authorize restarting or applying.
 
+## Write the design contract
+
+Before artwork or CSS, record:
+
+- native-preserving or bounded editorial layout
+- `backgroundScope`: home or workspace
+- `decorDensity`: minimal, balanced, or rich
+- light/dark mode and the visual reason
+- artwork focal point and text-safe region
+- semantic palette
+- surfaces allowed to change and native geometry/states to preserve
+- desktop and narrow verification viewports
+
+Default to native-preserving, home-only artwork, and balanced decoration.
+Use workspace artwork only when the user explicitly wants it on conversations.
+Do not default to dark mode when the brief is light, editorial, floral, paper,
+pastel, or productivity-oriented.
+
 ## Load only what is needed
 
 - Read [references/cli.md](references/cli.md) for runner selection.
@@ -40,8 +58,10 @@ create/export only does not authorize restarting or applying.
 
 1. Run `codedrobe apps --json` and `codedrobe detect --app codex --json` using
    the runner selected in `references/cli.md`.
-2. Create writable source at `<workspace>/themes/<theme-slug>/`. Never edit this
-   installed Skill in place.
+2. Create writable source at `~/.codexskins/sources/<theme-slug>/` and export to
+   `~/.codexskins/exports/<theme-slug>.codedrobe-theme`. Use a project workspace
+   only when the user explicitly wants version-controlled source there. Never
+   edit this installed Skill in place.
 3. Copy `assets/one-shot-starter/` into that source directory.
 4. If the concept benefits from artwork, invoke the available image-generation
    skill/tool. Generate an original wide hero with the subject on the right and
@@ -59,7 +79,9 @@ create/export only does not authorize restarting or applying.
    nodes remain present and the selectors match the current Core profile.
 8. When CDP is already reachable, capture the active context with the
    privacy-safe Core snapshot, run `probe`, apply with one watcher, and verify.
-9. When applying from inside Codex, select the platform helper:
+9. When applying from inside Codex, prefer `codedrobe-theme-manager` so one
+   globally owned watcher replaces the prior active theme. When that Skill is
+   unavailable, select the bundled platform helper:
    - macOS: run `scripts/macos_apply_theme.py --theme <absolute-package>
      --restart-existing`.
    - Windows: run `node scripts/windows_apply_theme.mjs --theme
@@ -69,6 +91,10 @@ create/export only does not authorize restarting or applying.
 10. After Codex returns, read the helper log, run Core `verify` with an absolute
     screenshot path, and inspect the screenshot. Confirm theme id/version,
     `hero`, profile, required landmarks, no overflow, and readable content.
+
+Keep completion levels separate: designed, statically inspected, applied,
+live-verified, and exported. Never promote a preview or successful package
+inspection into a claim that the real app was verified.
 
 ## Required CSS invariants
 
@@ -106,4 +132,9 @@ inspect a new screenshot. Typical repairs are documented in
 ## Finish
 
 Return the installed version, package path, screenshot path, contexts verified,
-and restore command. Do not claim success from packing alone.
+platform evidence, and the manager restore command. Explain that restoring a
+Codex theme with a `baseTheme` is two-phase: Core first removes renderer state
+and restores the backup on disk; Codex must then fully restart when the helper
+reports `restart-required`. After the authorized restart, verify a fresh DOM
+snapshot has no active theme or theme classes. Do not claim success from packing
+or a pre-restart restore alone.

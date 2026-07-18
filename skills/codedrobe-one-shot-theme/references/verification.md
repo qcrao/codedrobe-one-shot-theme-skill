@@ -36,4 +36,9 @@ codedrobe verify --app <app-id> --theme /absolute/theme.codedrobe-theme --screen
 
 Applying theme B replaces theme A in the same Core renderer session and revokes A's owned image URLs. A separate legacy or Desktop watcher may still inject again later; ensure one controller owns the renderer.
 
-After testing, restore the app and confirm that the Core host state, style element, root host class, and theme dataset are absent.
+After testing, restore the app and inspect Core's host result. If
+`host.changed: true`, fully restart Codex after the user authorizes it; a
+successful restore call can otherwise leave cached base colors visible in the
+running process. On the fresh renderer, confirm `activeTheme.installed: false`,
+the style element/root host class/theme dataset are absent, no owned watcher
+remains, and computed background colors are no longer the theme palette.
