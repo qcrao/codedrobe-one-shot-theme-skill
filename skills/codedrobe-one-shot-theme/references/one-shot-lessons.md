@@ -169,9 +169,23 @@ them in a separate top tray whose native `border-x`, `border-t`, and rounded top
 corners can appear as a second halo over full-frame artwork. Anchor the repair
 to the queue's own direct scroll wrapper: `.vertical-scroll-fade-mask`,
 `.hide-scrollbar`, and the `max-h-[30dvh]` class signature. Remove only its
-parent tray's border, radius, and shadow. Preserve the tray background so queued
-text stays readable, preserve the row actions such as Steer and delete, and do
-not weaken the composer's normal focus ring.
+parent tray's border and shadow. Keep rounded top corners while leaving the
+bottom corners square so the tray joins the composer naturally. Preserve the
+tray background so queued text stays readable, preserve the row actions such
+as Steer and delete, and do not weaken the composer's normal focus ring.
+
+The queue action normally returns focus to the composer. A large blurred
+composer shadow can then look like a second rounded tray even after the queued
+row has disappeared. Inspect the live computed `box-shadow` before widening the
+queue selector. Use a downward-weighted shadow with a negative spread so its
+blur does not bleed over the top edge, while retaining the separate
+`0 0 0 3px` `:focus-within` halo for keyboard visibility.
+
+The files-changed status chip is mounted inside the sticky composer region and
+returns focus to the editor. In a full-frame theme, the normal outer focus halo
+can then resemble the removed tray chrome. Do not remove focus styling globally.
+Scope a repair to `.sticky.bottom-0:has(.diff-stat-rolling-number)` and replace
+the outer halo with a small inset ring while the chip is present.
 
 ## Treat light cards inside a dark sidebar as separate contrast systems
 

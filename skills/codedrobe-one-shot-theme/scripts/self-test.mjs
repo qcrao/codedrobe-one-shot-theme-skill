@@ -39,16 +39,24 @@ requireMatch(
   "only the direct conversation footer scrim should be removed",
 );
 requireMatch(
-  /div:has\(> \.vertical-scroll-fade-mask\.hide-scrollbar\[class\*="max-h-\[30dvh\]"\]\)\s*\{[^}]*border:\s*0\s*!important;[^}]*border-radius:\s*0\s*!important;[^}]*box-shadow:\s*none\s*!important;/s,
-  "the queued-message top tray must not reintroduce rounded border chrome",
+  /div:has\(> \.vertical-scroll-fade-mask\.hide-scrollbar\.max-h-\\\[30dvh\\\]\)\s*\{[^}]*border:\s*0\s*!important;[^}]*border-radius:\s*18px\s+18px\s+0\s+0\s*!important;[^}]*box-shadow:\s*none\s*!important;/s,
+  "the queued-message top tray must keep top corners without border chrome",
 );
 requireAbsent(
-  /div:has\(> \.vertical-scroll-fade-mask\.hide-scrollbar\[class\*="max-h-\[30dvh\]"\]\)\s*\{[^}]*(?:background|opacity)\s*:/s,
+  /div:has\(> \.vertical-scroll-fade-mask\.hide-scrollbar\.max-h-\\\[30dvh\\\]\)\s*\{[^}]*(?:background|opacity)\s*:/s,
   "the queued-message tray must keep its readable native surface",
+);
+requireMatch(
+  /\.composer-surface-chrome\s*\{[^}]*box-shadow:\s*0\s+18px\s+28px\s+-18px/s,
+  "the normal composer shadow must be weighted below the surface",
 );
 requireMatch(
   /\.composer-surface-chrome:focus-within\s*\{[^}]*0\s+0\s+0\s+3px/s,
   "the native-readable composer focus halo must remain",
+);
+requireMatch(
+  /\.sticky\.bottom-0:has\(\.diff-stat-rolling-number\)\s+\.composer-surface-chrome:focus-within\s*\{[^}]*inset\s+0\s+0\s+0\s+2px/s,
+  "files-changed state must use an inset composer focus ring",
 );
 requireMatch(
   /@layer\s+base\s*\{[\s\S]*button\[class\*="!text-token-input-placeholder-foreground"\][\s\S]*--color-token-input-placeholder-foreground\s*:/,

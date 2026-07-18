@@ -1,6 +1,6 @@
 {
   "name": "codedrobe-one-shot-theme-skill",
-  "version": "0.3.11",
+  "version": "0.3.14",
   "private": true,
   "description": "Composable CodeDrobe skills for creating, finding, installing, switching, verifying, and submitting Codex themes.",
   "license": "Apache-2.0",

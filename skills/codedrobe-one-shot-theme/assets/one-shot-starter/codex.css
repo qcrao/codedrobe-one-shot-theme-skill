@@ -428,7 +428,7 @@ html.codedrobe-host-codex .composer-surface-chrome {
   border-radius: 18px 18px 8px 18px !important;
   background: rgba(255, 252, 245, .94) !important;
   color: var(--theme-ink) !important;
-  box-shadow: 0 13px 32px rgba(53, 40, 28, .13), inset 0 1px rgba(255, 255, 255, .72) !important;
+  box-shadow: 0 18px 28px -18px rgba(53, 40, 28, .28), inset 0 1px rgba(255, 255, 255, .72) !important;
 }
 
 html.codedrobe-codex-skin:not(:has(.dream-home)) .sticky.bottom-0 > .pointer-events-none.absolute > .bg-gradient-to-t.from-token-main-surface-primary {
@@ -437,15 +437,21 @@ html.codedrobe-codex-skin:not(:has(.dream-home)) .sticky.bottom-0 > .pointer-eve
 
 /* Queue messages mount in a separate translucent top tray above the composer.
    Flatten only that tray's native rounded border; keep its readable surface and controls. */
-html.codedrobe-codex-skin:not(:has(.dream-home)) div:has(> .vertical-scroll-fade-mask.hide-scrollbar[class*="max-h-[30dvh]"]) {
+html.codedrobe-codex-skin:not(:has(.dream-home)) div:has(> .vertical-scroll-fade-mask.hide-scrollbar.max-h-\[30dvh\]) {
   border: 0 !important;
-  border-radius: 0 !important;
+  border-radius: 18px 18px 0 0 !important;
   box-shadow: none !important;
 }
 
 html.codedrobe-host-codex .composer-surface-chrome:focus-within {
   border-color: rgba(167, 46, 37, .52) !important;
-  box-shadow: 0 14px 34px rgba(53, 40, 28, .14), 0 0 0 3px rgba(167, 46, 37, .08) !important;
+  box-shadow: 0 18px 28px -18px rgba(53, 40, 28, .30), 0 0 0 3px rgba(167, 46, 37, .08) !important;
+}
+
+/* The files-changed chip returns focus to the composer. Keep focus visible,
+   but move its halo inside so it does not read as another outer tray. */
+html.codedrobe-codex-skin .sticky.bottom-0:has(.diff-stat-rolling-number) .composer-surface-chrome:focus-within {
+  box-shadow: 0 18px 28px -18px rgba(53, 40, 28, .30), inset 0 0 0 2px rgba(167, 46, 37, .18) !important;
 }
 
 html.codedrobe-host-codex .composer-surface-chrome :is(textarea, .ProseMirror, [contenteditable="true"]) {

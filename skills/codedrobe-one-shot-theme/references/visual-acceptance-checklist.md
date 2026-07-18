@@ -61,7 +61,14 @@ and Codex build.
   controls, caret, microphone, send button, focus ring, and keyboard behavior.
 - Queue at least one follow-up while a response is running. The queued-message
   row remains readable, its Steer/delete/more controls still work, and its
-  separate top tray does not reintroduce a rounded border or shadow halo.
+  separate top tray keeps rounded top corners without reintroducing a border or
+  shadow halo; its square bottom corners join the composer cleanly.
+- After the queue advances and focus returns to the composer, its normal drop
+  shadow stays below the surface rather than bleeding into a second top arc;
+  the small `:focus-within` accessibility halo remains visible.
+- Trigger a files-changed status chip. While it is visible, the composer uses an
+  inset focus ring and does not gain an outer top arc; after the chip disappears,
+  the normal outer focus halo returns.
 
 ## Recovery
 
