@@ -354,14 +354,14 @@ html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .gr
   color: #f7ecd8 !important;
 }
 
-html.codedrobe-codex-skin .dream-home .group\/project-selector > button {
+html.codedrobe-codex-skin .dream-home .group\/project-selector {
   border-color: rgba(211, 163, 89, .34) !important;
   background: rgba(255, 252, 245, .92) !important;
   color: var(--theme-accent-deep) !important;
   box-shadow: 0 5px 14px rgba(0, 0, 0, .18) !important;
 }
 
-html.codedrobe-codex-skin .dream-home .group\/project-selector > button :is(span, svg) {
+html.codedrobe-codex-skin .dream-home .group\/project-selector :is(button, span, svg) {
   color: var(--theme-accent-deep) !important;
 }
 

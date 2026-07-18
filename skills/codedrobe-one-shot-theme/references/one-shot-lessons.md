@@ -135,6 +135,10 @@ project dock and composer dimensions. If the hero must span the workspace,
 expand only the hero shell with container-query width and center it independently.
 Style the whole project metadata strip, not only `.group\/project-selector`, so
 repository location and branch text retain readable contrast on a dark dock.
+Then restyle `.group\/project-selector` itself and its descendants for the
+selected light project pill. Do not assume the semantic group contains a direct
+`button`; on current Codex builds the semantic class may be the interactive
+container, so a `> button` rule can miss its label and folder icon.
 
 ## Restore needs a fresh process when base colors changed
 
