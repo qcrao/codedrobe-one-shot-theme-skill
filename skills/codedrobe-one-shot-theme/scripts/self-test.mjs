@@ -39,6 +39,14 @@ requireMatch(
   "only the direct conversation footer scrim should be removed",
 );
 requireMatch(
+  /div:has\(> \.vertical-scroll-fade-mask\.hide-scrollbar\[class\*="max-h-\[30dvh\]"\]\)\s*\{[^}]*border:\s*0\s*!important;[^}]*border-radius:\s*0\s*!important;[^}]*box-shadow:\s*none\s*!important;/s,
+  "the queued-message top tray must not reintroduce rounded border chrome",
+);
+requireAbsent(
+  /div:has\(> \.vertical-scroll-fade-mask\.hide-scrollbar\[class\*="max-h-\[30dvh\]"\]\)\s*\{[^}]*(?:background|opacity)\s*:/s,
+  "the queued-message tray must keep its readable native surface",
+);
+requireMatch(
   /\.composer-surface-chrome:focus-within\s*\{[^}]*0\s+0\s+0\s+3px/s,
   "the native-readable composer focus halo must remain",
 );

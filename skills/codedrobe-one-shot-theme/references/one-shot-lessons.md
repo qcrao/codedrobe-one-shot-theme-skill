@@ -162,6 +162,17 @@ gradient: the composer also owns a small internal scroll fade that should stay.
 Keep the composer surface, its normal shadow, and its `:focus-within` ring
 unchanged.
 
+## Flatten the queued-message tray without flattening the composer
+
+Queued follow-ups do not live inside `.composer-surface-chrome`. Codex mounts
+them in a separate top tray whose native `border-x`, `border-t`, and rounded top
+corners can appear as a second halo over full-frame artwork. Anchor the repair
+to the queue's own direct scroll wrapper: `.vertical-scroll-fade-mask`,
+`.hide-scrollbar`, and the `max-h-[30dvh]` class signature. Remove only its
+parent tray's border, radius, and shadow. Preserve the tray background so queued
+text stays readable, preserve the row actions such as Steer and delete, and do
+not weaken the composer's normal focus ring.
+
 ## Treat light cards inside a dark sidebar as separate contrast systems
 
 A dark-sidebar theme often starts with a broad descendant rule so navigation,

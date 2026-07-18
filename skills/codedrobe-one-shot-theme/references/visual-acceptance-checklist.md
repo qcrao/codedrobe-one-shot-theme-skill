@@ -60,7 +60,8 @@ and Codex build.
 - Composer idle, typing, expanded, and `:focus-within` states preserve native
   controls, caret, microphone, send button, focus ring, and keyboard behavior.
 - Queue at least one follow-up while a response is running. The queued-message
-  row remains readable and does not reintroduce the outer footer tray.
+  row remains readable, its Steer/delete/more controls still work, and its
+  separate top tray does not reintroduce a rounded border or shadow halo.
 
 ## Recovery
 

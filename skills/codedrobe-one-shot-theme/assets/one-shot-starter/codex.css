@@ -435,6 +435,14 @@ html.codedrobe-codex-skin:not(:has(.dream-home)) .sticky.bottom-0 > .pointer-eve
   background-image: none !important;
 }
 
+/* Queue messages mount in a separate translucent top tray above the composer.
+   Flatten only that tray's native rounded border; keep its readable surface and controls. */
+html.codedrobe-codex-skin:not(:has(.dream-home)) div:has(> .vertical-scroll-fade-mask.hide-scrollbar[class*="max-h-[30dvh]"]) {
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
 html.codedrobe-host-codex .composer-surface-chrome:focus-within {
   border-color: rgba(167, 46, 37, .52) !important;
   box-shadow: 0 14px 34px rgba(53, 40, 28, .14), 0 0 0 3px rgba(167, 46, 37, .08) !important;
