@@ -375,6 +375,10 @@ html.codedrobe-host-codex .composer-surface-chrome {
   box-shadow: 0 13px 32px rgba(53, 40, 28, .13), inset 0 1px rgba(255, 255, 255, .72) !important;
 }
 
+html.codedrobe-codex-skin:not(:has(.dream-home)) .sticky.bottom-0 > .pointer-events-none.absolute > .bg-gradient-to-t.from-token-main-surface-primary {
+  background-image: none !important;
+}
+
 html.codedrobe-host-codex .composer-surface-chrome:focus-within {
   border-color: rgba(167, 46, 37, .52) !important;
   box-shadow: 0 14px 34px rgba(53, 40, 28, .14), 0 0 0 3px rgba(167, 46, 37, .08) !important;

@@ -150,6 +150,18 @@ Do not force `stroke` or `fill` on the SVG itself: Codex icons already inherit
 `currentColor`, and changing their paint properties can turn the native folder
 outline into a doubled or solid-looking glyph.
 
+## Remove the conversation footer scrim over full-frame artwork
+
+Codex places a pointer-events-none `bg-gradient-to-t` layer behind the sticky
+conversation composer. Its `from-token-main-surface-primary` color is invisible
+on a flat native surface, but becomes a pale rectangular tray around the
+composer when the conversation uses full-frame artwork. On non-home routes,
+target only the direct gradient child of the sticky footer's absolute backdrop
+and remove that layer's `background-image`. Do not match every descendant
+gradient: the composer also owns a small internal scroll fade that should stay.
+Keep the composer surface, its normal shadow, and its `:focus-within` ring
+unchanged.
+
 ## Restore needs a fresh process when base colors changed
 
 Core restore removes renderer CSS immediately and restores the transactional
