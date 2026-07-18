@@ -51,6 +51,8 @@ pastel, or productivity-oriented.
   changing manifests, images, verification nodes, or packages.
 - Read [references/dom-snapshot.md](references/dom-snapshot.md) and
   [references/verification.md](references/verification.md) for live checks.
+- Read [references/visual-acceptance-checklist.md](references/visual-acceptance-checklist.md)
+  before the final apply/verify pass or after any screenshot-driven repair.
 - Read [references/doll-sister-example.md](references/doll-sister-example.md)
   only when a second complete design example is useful.
 
@@ -106,6 +108,11 @@ pastel, or productivity-oriented.
     readable themed controls. Preserve its native width, height, and position;
     expand only the independent hero shell when a wide composition is needed.
     Do not patch the app or invent a preloader.
+11. Run every applicable state in `references/visual-acceptance-checklist.md`.
+    Verify native hover-only and hidden controls as states, not just as static
+    colors. A selector that fixes the selected project label must not reveal its
+    hidden clear-project button, repaint SVG paths, or remove a nested composer
+    fade while repairing the outer footer scrim.
 
 Keep completion levels separate: designed, statically inspected, applied,
 live-verified, and exported. Never promote a preview or successful package
@@ -150,6 +157,19 @@ When the user provides a screenshot, inspect it before editing. Make one focused
 version bump, repack, stop the old owned watcher, start the new one, verify, and
 inspect a new screenshot. Typical repairs are documented in
 `references/one-shot-lessons.md`.
+
+Use the privacy-safe live DOM snapshot to identify the visible node, its parent
+chain, computed color, background, border, shadow, opacity, and geometry. Fix
+the narrowest semantic layer that owns the symptom. Re-snapshot after applying
+and confirm nearby native layers retained their previous computed behavior. If
+the active route cannot expose a transient native control, inspect the installed
+application bundle read-only for that component's class/state contract; never
+patch or extract files back into the application.
+
+Treat an empty platform-helper response as unknown, not success. Run Core
+`verify` and compare the installed version with the just-packed manifest. Retry
+the owned helper only when the live version is stale, then verify again. Do not
+claim a repair is live because packing or helper submission exited with code 0.
 
 ## Finish
 

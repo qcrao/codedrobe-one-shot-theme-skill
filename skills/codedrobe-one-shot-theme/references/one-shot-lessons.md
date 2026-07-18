@@ -183,3 +183,15 @@ Run the detached apply helper as its own action after packing. A chained shell
 can be interrupted when Codex replaces a renderer, so always confirm the live
 version reported by `verify` matches the just-packed manifest before claiming
 the repair is installed.
+
+The macOS helper can occasionally return no structured output on its first
+submission while the previous watcher remains active. Do not interpret the
+empty response as applied. Verify the live version; when it is stale, submit the
+same owned helper again and require both structured helper output and a matching
+Core verification result.
+
+When repairing a broad selector, verify its siblings as well as its target. For
+example, removing every descendant `bg-gradient-to-t` fixes the outer composer
+tray but also erases the native internal scroll fade. Prefer direct-child and
+state-aware selectors, then compare computed styles for both layers after the
+new package is live.
