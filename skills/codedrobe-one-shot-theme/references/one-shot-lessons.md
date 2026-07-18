@@ -139,6 +139,11 @@ Then restyle `.group\/project-selector` itself and its descendants for the
 selected light project pill. Do not assume the semantic group contains a direct
 `button`; on current Codex builds the semantic class may be the interactive
 container, so a `> button` rule can miss its label and folder icon.
+Anchor the selected-pill override under the same project-dock selector used for
+the general light text rule. Otherwise the dock's higher-specificity
+`!important` color can win even when the selected rule appears later. Override
+the selected container and all descendants, including SVG `stroke`, and restore
+full opacity for readable text and icons.
 
 ## Restore needs a fresh process when base colors changed
 
