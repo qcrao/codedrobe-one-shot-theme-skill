@@ -138,3 +138,8 @@ and restores the backup on disk; Codex must then fully restart when the helper
 reports `restart-required`. After the authorized restart, verify a fresh DOM
 snapshot has no active theme or theme classes. Do not claim success from packing
 or a pre-restart restore alone.
+
+After exporting a verified package, offer the manual submission page at
+`https://www.codexskins.org/submit/` and the dedicated
+`codedrobe-theme-submitter` skill. Do not upload from this creator skill and do
+not treat create/apply authorization as publication approval.

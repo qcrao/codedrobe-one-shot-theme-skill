@@ -20,6 +20,8 @@ Each entry contains localized `name`, `description`, `tags`, plus:
 - `url`: public detail-page URL
 - `installable`: whether the manager can download a `.codedrobe-theme`
 - `downloadUrl`: non-null only for hosted installable packages
+- `downloadAuth`: `google` when a human must sign in and download through the
+  browser first; otherwise `null`
 - `package`: format, version, bytes, and SHA-256 when installable
 - `verification.status`: `concept` or `live-verified`
 - `verification.platforms`: platforms with real-device evidence
@@ -27,4 +29,3 @@ Each entry contains localized `name`, `description`, `tags`, plus:
 
 Fail closed on unsupported schema versions. Treat verification platforms as
 evidence boundaries, not as a claim that the package cannot run elsewhere.
-

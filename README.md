@@ -1,6 +1,6 @@
 # CodexSkins CodeDrobe Skills
 
-Create, discover, install, switch, and verify OpenAI Codex desktop themes on
+Create, discover, install, switch, verify, and submit OpenAI Codex desktop themes on
 macOS or Windows. The skills use
 [`@codedrobe/core`](https://github.com/CodeDrobe/core) as their only theming
 runtime and add a reliable authoring, restart, watcher, and visual-verification
@@ -21,9 +21,9 @@ npx skills add qcrao/codedrobe-one-shot-theme-skill \
   --yes
 ```
 
-Replace the skill name with `codedrobe-theme-finder` or
-`codedrobe-theme-manager` when that is the capability needed. Install only one
-for the current request.
+Replace the skill name with `codedrobe-theme-finder`,
+`codedrobe-theme-manager`, or `codedrobe-theme-submitter` when that is the
+capability needed. Install only one for the current request.
 
 ## Skills
 
@@ -31,6 +31,9 @@ for the current request.
 - `codedrobe-theme-finder`: search the machine-readable CodexSkins catalog.
 - `codedrobe-theme-manager`: download with SHA-256 verification, apply or
   switch through one owned watcher, verify, and restore.
+- `codedrobe-theme-submitter`: validate a public workspace preview and optional
+  package, require explicit confirmation, and submit it to the CodexSkins
+  moderation queue without an account or API key.
 
 ## Use
 

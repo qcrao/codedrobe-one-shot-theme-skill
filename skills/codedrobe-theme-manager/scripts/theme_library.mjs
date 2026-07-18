@@ -133,6 +133,9 @@ async function install(options) {
   const entry = catalog.themes.find((candidate) => candidate.id === options.id);
   if (!entry) throw new Error(`Theme "${options.id}" was not found in the CodexSkins catalog`);
   if (!entry.installable || !entry.downloadUrl) throw new Error(entry.guidance?.en || `Theme "${options.id}" is not installable`);
+  if (entry.downloadAuth === 'google') {
+    throw new Error(`Theme "${entry.id}" requires Google sign-in. Open ${entry.url}, sign in and download the package in a browser, then apply the downloaded local file with apply_theme.mjs.`);
+  }
   const download = new URL(entry.downloadUrl);
   if (download.protocol !== 'https:' || !/(^|\.)codexskins\.org$/.test(download.hostname)) {
     throw new Error('Refusing a package URL outside the HTTPS CodexSkins domain');

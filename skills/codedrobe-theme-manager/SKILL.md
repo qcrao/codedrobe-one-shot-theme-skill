@@ -21,6 +21,11 @@ When they name an installable catalog id, run:
 node scripts/theme_library.mjs install <theme-id>
 ```
 
+If the catalog reports `downloadAuth: "google"`, do not try to automate Google
+sign-in or follow the login page as a package download. Give the user the theme
+detail URL, ask them to sign in and download it in a browser, then inspect and
+apply the resulting local `.codedrobe-theme` path with `apply_theme.mjs`.
+
 The installer downloads only the package URL published in the CodexSkins
 catalog, checks byte size and SHA-256, inspects it with CodeDrobe Core, and then
 writes it under `~/.codexskins/themes/<theme-id>/`. It refuses to overwrite an

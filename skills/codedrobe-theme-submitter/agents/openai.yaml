@@ -1,0 +1,4 @@
+interface:
+  display_name: "CodeDrobe Theme Submitter"
+  short_description: "Submit a verified Codex theme for review"
+  default_prompt: "Use $codedrobe-theme-submitter to validate my Codex theme, show the public preview, and submit it only after my confirmation."

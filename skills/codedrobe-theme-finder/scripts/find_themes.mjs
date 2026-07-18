@@ -79,6 +79,7 @@ export function rankThemes(themes, options) {
       url: entry.url,
       installable: Boolean(entry.installable),
       downloadUrl: entry.downloadUrl,
+      downloadAuth: entry.downloadAuth ?? null,
       package: entry.package ?? null,
       verification: entry.verification,
       guidance: localized(entry, 'guidance', options.lang),
