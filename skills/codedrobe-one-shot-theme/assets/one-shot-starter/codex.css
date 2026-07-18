@@ -188,7 +188,6 @@ html.codedrobe-host-codex main.main-surface:has([data-testid="home-icon"])::afte
 }
 
 html.codedrobe-codex-skin .dream-home {
-  --thread-content-max-width: min(1040px, calc(100cqw - 48px)) !important;
   overflow-x: hidden !important;
 }
 
@@ -208,8 +207,10 @@ html.codedrobe-codex-skin .dream-home > div:first-child > div:first-child {
 html.codedrobe-codex-skin .dream-home > div:first-child > div:first-child > div:first-child {
   position: relative !important;
   isolation: isolate;
-  width: calc(100% - 48px) !important;
+  left: 50% !important;
+  width: calc(100cqw - 48px) !important;
   max-width: none !important;
+  transform: translateX(-50%) !important;
   height: 300px !important;
   min-height: 300px !important;
   flex: 0 1 auto !important;
@@ -303,13 +304,6 @@ html.codedrobe-codex-skin .dream-home [data-feature="game-source"] button {
   box-shadow: inset 0 0 14px rgba(255, 255, 255, .72);
 }
 
-html.codedrobe-codex-skin .dream-home > div:first-child > div:first-child > div:first-child > div:nth-child(2) {
-  left: 16px !important;
-  right: 16px !important;
-  top: 100% !important;
-  margin-top: 16px !important;
-}
-
 html.codedrobe-codex-skin .dream-home .group\/home-suggestions {
   overflow: visible !important;
 }
@@ -343,7 +337,6 @@ html.codedrobe-codex-skin .dream-home .group\/home-suggestions > *:hover {
 
 html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector) {
   position: relative;
-  padding-top: 28px !important;
   border: 1px solid rgba(184, 135, 61, .34) !important;
   border-bottom: 0 !important;
   background:
@@ -353,16 +346,12 @@ html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .gr
 }
 
 html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector)::before {
-  content: "选择项目 · SELECT PROJECT";
-  position: absolute;
-  left: 14px;
-  top: 6px;
-  z-index: 2;
-  color: #d3a359;
-  font-size: 11px;
-  font-weight: 750;
-  letter-spacing: .12em;
-  white-space: nowrap;
+  content: none;
+}
+
+html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector),
+html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector) .horizontal-scroll-fade-mask :is(button, span, svg) {
+  color: #f7ecd8 !important;
 }
 
 html.codedrobe-codex-skin .dream-home .group\/project-selector > button {
@@ -428,17 +417,13 @@ html.codedrobe-host-codex * {
 }
 
 @media (max-width: 900px) {
-  html.codedrobe-codex-skin .dream-home {
-    --thread-content-max-width: min(860px, calc(100cqw - 30px)) !important;
-  }
-
   html.codedrobe-codex-skin .dream-home > div:first-child > div:first-child {
     flex-basis: 420px !important;
     min-height: 420px !important;
   }
 
   html.codedrobe-codex-skin .dream-home > div:first-child > div:first-child > div:first-child {
-    width: calc(100% - 30px) !important;
+    width: calc(100cqw - 30px) !important;
     height: 250px !important;
     min-height: 250px !important;
     background-image:

@@ -127,6 +127,15 @@ project pills. The native frame then settles into the themed frame instead of
 reversing luminance. Do not add fake loading overlays, app-bundle patches, or a
 second injector to hide the transition.
 
+Do not solve hero composition by changing the shared
+`--thread-content-max-width`, stretching the project dock with `left` and
+`right`, or adding top padding for a synthetic label. Those geometry changes
+arrive only after injection and create a visible size jump. Preserve the native
+project dock and composer dimensions. If the hero must span the workspace,
+expand only the hero shell with container-query width and center it independently.
+Style the whole project metadata strip, not only `.group\/project-selector`, so
+repository location and branch text retain readable contrast on a dark dock.
+
 ## Restore needs a fresh process when base colors changed
 
 Core restore removes renderer CSS immediately and restores the transactional

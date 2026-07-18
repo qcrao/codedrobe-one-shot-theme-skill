@@ -103,7 +103,9 @@ pastel, or productivity-oriented.
     Reload or switch into home once while watching the project selector. If the
     native first frame is dark before Core can inject, avoid a black-to-light
     flash by designing the final project dock in a compatible dark surface with
-    readable themed controls. Do not patch the app or invent a preloader.
+    readable themed controls. Preserve its native width, height, and position;
+    expand only the independent hero shell when a wide composition is needed.
+    Do not patch the app or invent a preloader.
 
 Keep completion levels separate: designed, statically inspected, applied,
 live-verified, and exported. Never promote a preview or successful package
