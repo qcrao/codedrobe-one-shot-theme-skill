@@ -113,6 +113,20 @@ creates an obvious blank seam at the rounded edge.
   `.horizontal-scroll-fade-mask .group\/project-selector` with readable surface
   and foreground tokens.
 
+## First-frame project dock
+
+Core waits for a compatible Codex root before injecting a data-only theme. On a
+fresh home renderer, Codex can therefore paint its native dark project dock for
+one frame before theme CSS exists. Theme CSS cannot run earlier without crossing
+the runtime boundary and modifying the application.
+
+When that native frame creates a distracting black-to-light flash, keep the
+final project dock close to the native dark value and theme its readable state:
+use the sidebar/night surface for the dock, a gold or accent label, and light
+project pills. The native frame then settles into the themed frame instead of
+reversing luminance. Do not add fake loading overlays, app-bundle patches, or a
+second injector to hide the transition.
+
 ## Restore needs a fresh process when base colors changed
 
 Core restore removes renderer CSS immediately and restores the transactional

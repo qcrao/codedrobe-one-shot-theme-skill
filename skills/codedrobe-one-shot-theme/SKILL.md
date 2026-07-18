@@ -100,6 +100,10 @@ pastel, or productivity-oriented.
     Inspect both home and a normal task at desktop width: the home focal subject
     must be fully framed with no right-edge gap, and a workspace background must
     fill the conversation surface without exposing the source image boundary.
+    Reload or switch into home once while watching the project selector. If the
+    native first frame is dark before Core can inject, avoid a black-to-light
+    flash by designing the final project dock in a compatible dark surface with
+    readable themed controls. Do not patch the app or invent a preloader.
 
 Keep completion levels separate: designed, statically inspected, applied,
 live-verified, and exported. Never promote a preview or successful package

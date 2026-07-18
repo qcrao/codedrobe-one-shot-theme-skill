@@ -344,9 +344,12 @@ html.codedrobe-codex-skin .dream-home .group\/home-suggestions > *:hover {
 html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector) {
   position: relative;
   padding-top: 28px !important;
-  border: 1px solid rgba(99, 69, 44, .20) !important;
+  border: 1px solid rgba(184, 135, 61, .34) !important;
   border-bottom: 0 !important;
-  background: linear-gradient(180deg, rgba(255, 252, 245, .97), rgba(239, 222, 192, .90)) !important;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(167, 46, 37, .20), transparent 32%),
+    linear-gradient(180deg, #24231f, #171714) !important;
+  box-shadow: 0 -8px 28px rgba(36, 28, 20, .13) !important;
 }
 
 html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector)::before {
@@ -355,7 +358,7 @@ html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .gr
   left: 14px;
   top: 6px;
   z-index: 2;
-  color: var(--theme-accent-deep);
+  color: #d3a359;
   font-size: 11px;
   font-weight: 750;
   letter-spacing: .12em;
@@ -363,10 +366,14 @@ html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .gr
 }
 
 html.codedrobe-codex-skin .dream-home .group\/project-selector > button {
-  border-color: rgba(167, 46, 37, .24) !important;
+  border-color: rgba(211, 163, 89, .34) !important;
   background: rgba(255, 252, 245, .92) !important;
   color: var(--theme-accent-deep) !important;
-  box-shadow: 0 4px 12px rgba(53, 40, 28, .08) !important;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, .18) !important;
+}
+
+html.codedrobe-codex-skin .dream-home .group\/project-selector > button :is(span, svg) {
+  color: var(--theme-accent-deep) !important;
 }
 
 html.codedrobe-host-codex .composer-surface-chrome {
