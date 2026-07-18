@@ -142,8 +142,10 @@ container, so a `> button` rule can miss its label and folder icon.
 Anchor the selected-pill override under the same project-dock selector used for
 the general light text rule. Otherwise the dock's higher-specificity
 `!important` color can win even when the selected rule appears later. Override
-the selected container and all descendants, including SVG `stroke`, and restore
-full opacity for readable text and icons.
+the selected container and all descendants' `color`, and restore full opacity
+for readable text and icons. Do not force `stroke` or `fill` on the SVG itself:
+Codex icons already inherit `currentColor`, and changing their paint properties
+can turn the native folder outline into a doubled or solid-looking glyph.
 
 ## Restore needs a fresh process when base colors changed
 

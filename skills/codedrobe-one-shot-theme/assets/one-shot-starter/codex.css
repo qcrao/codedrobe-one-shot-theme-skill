@@ -365,7 +365,6 @@ html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .gr
 html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector) .horizontal-scroll-fade-mask .group\/project-selector *,
 html.codedrobe-codex-skin .dream-home div:has(> .horizontal-scroll-fade-mask .group\/project-selector) .horizontal-scroll-fade-mask .group\/project-selector :is(button, span, svg) {
   color: var(--theme-accent-deep) !important;
-  stroke: currentColor !important;
   opacity: 1 !important;
 }
 
