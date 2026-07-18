@@ -50,3 +50,9 @@ process metadata points to that workflow's owned helper.
   `--restart-existing` and verify the restarted renderer.
 - A watcher label remains after `launchctl remove`: use the helper's owned-label
   cleanup and verify `launchctl list`; never terminate unrelated processes.
+- Codex keeps quitting and reopening after a restore: an old
+  `org.codexskins.codedrobe.native-restart` job is looping because launchd
+  re-runs submitted jobs when they exit. Run
+  `launchctl bootout gui/$(id -u)/org.codexskins.codedrobe.native-restart`
+  once, or rerun `restore_theme.mjs`, which now removes the stale label before
+  restoring and submits restart jobs that clean up their own label.

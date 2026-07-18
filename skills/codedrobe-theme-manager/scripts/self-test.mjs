@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { parseThemeId, validatePackageBytes } from './theme_library.mjs';
-import { classifyRestore } from './restore_theme.mjs';
+import { classifyRestore, macRestartShellCommand } from './restore_theme.mjs';
 
 const bytes = Buffer.from('data-only-theme');
 const entry = {
@@ -33,5 +33,12 @@ assert.deepEqual(classifyRestore({
 });
 assert.equal(classifyRestore({ host: { restored: true, changed: false } }).restartRequired, false);
 assert.equal(classifyRestore({ host: { restored: true, changed: true } }, 'workbuddy').restartRequired, false);
+
+const restartCommand = macRestartShellCommand("'codedrobe' 'launch'", 'org.codexskins.codedrobe.native-restart');
+assert.ok(
+  restartCommand.endsWith("/bin/launchctl remove 'org.codexskins.codedrobe.native-restart'"),
+  'macOS restart job must remove its own launchd label so launchd cannot re-run it in a loop',
+);
+assert.ok(!restartCommand.includes('exec '), 'restart command must not exec away the self-cleanup step');
 
 console.log('codedrobe-theme-manager package tests passed');

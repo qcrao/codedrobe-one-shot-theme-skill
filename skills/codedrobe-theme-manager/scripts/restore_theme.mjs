@@ -72,6 +72,13 @@ function shellQuote(value) {
   return `'${String(value).replaceAll("'", "'\\''")}'`;
 }
 
+// launchd re-runs submitted jobs whenever their process exits, so a one-shot
+// restart must remove its own label as its final step or Codex gets killed and
+// relaunched in an endless loop.
+export function macRestartShellCommand(command, label) {
+  return `/bin/sleep 1; ${command}; /bin/launchctl remove ${shellQuote(label)}`;
+}
+
 function powershellQuote(value) {
   return `'${String(value).replaceAll("'", "''")}'`;
 }
@@ -114,11 +121,12 @@ function stopWindowsWorker(pidFile, workerFile) {
 function stopWatchers(base, options) {
   if (options.platform === 'darwin') {
     const owned = stopMacLabel(macWatcherLabel);
+    const staleRestart = stopMacLabel(macRestartLabel);
     const legacy = listMacLabels().filter((label) => label.startsWith('com.codedrobe.one-shot.'));
     const legacyResults = legacy.map((label) => ({ label, ...stopMacLabel(label) }));
     return {
-      stopped: owned.existed || legacyResults.some((item) => item.existed),
-      remaining: [macWatcherLabel, ...legacy].filter((label) => listMacLabels().includes(label)),
+      stopped: owned.existed || staleRestart.existed || legacyResults.some((item) => item.existed),
+      remaining: [macWatcherLabel, macRestartLabel, ...legacy].filter((label) => listMacLabels().includes(label)),
     };
   }
 
@@ -169,7 +177,7 @@ function submitRestart(core, options) {
   if (options.platform === 'darwin') {
     fs.mkdirSync(path.dirname(plan.stdoutLog), { recursive: true });
     stopMacLabel(plan.label);
-    const delayedCommand = `/bin/sleep 1; exec ${plan.command}`;
+    const delayedCommand = macRestartShellCommand(plan.command, plan.label);
     const submitted = spawnSync('launchctl', [
       'submit', '-l', plan.label, '-o', plan.stdoutLog, '-e', plan.stderrLog,
       '--', '/bin/zsh', '-lc', delayedCommand,
